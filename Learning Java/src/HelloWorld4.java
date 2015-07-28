@@ -16,4 +16,31 @@ public class HelloWorld4 {
 class HelloComponent4 extends JComponent 
 	implements MouseMotionListener, ActionListener, Runnable {
 	
+	String theMessage;
+	int messageX = 125, messageY = 95;
+	
+	JButton theButton;
+	
+	int colorIndex;
+	Color[] someColors = {
+			Color.black, Color.blue, Color.red, Color.green, Color.magenta
+	};
+	
+	boolean blinkState;
+	
+	public HelloComponent4 (String message) {
+		theMessage = message;
+		theButton = new JButton("Change Color");
+		setLayout(new FlowLayout());
+		add(theButton);
+		theButton.addActionListener(this);
+		addMouseMotionListener(this);
+		Thread t = new Thread(this);
+		t.start();
+	}
+	public void paintComponent(Graphics g) {
+		g.setColor(blinkState ? getBackground() : currentColor());
+		g.drawString(theMessage, messageX, messageY);
+		
+	}
 }
