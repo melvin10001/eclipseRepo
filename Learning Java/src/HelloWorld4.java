@@ -43,4 +43,34 @@ class HelloComponent4 extends JComponent
 		g.drawString(theMessage, messageX, messageY);
 		
 	}
+	public void mouseDragged(MouseEvent e) {
+		messageX = e.getX();
+		messageY = e.getY();
+		repaint();
+	}
+	public void mouseMoved(MouseEvent e){}
+	
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == theButton) {
+			changeColor();
+		}
+	}
+	synchronized private void changeColor(){
+		if(++colorIndex == someColors.length)
+			colorIndex = 0;
+		setForeground(currentColor());
+		repaint();
+	}
+	synchronized private Color currentColor(){
+		return someColors[colorIndex];
+	}
+	public void run(){
+		try {
+			while(true){
+				blinkState = !blinkState; // Toggle blinkState.
+				repaint();
+				Thread.sleep(300);
+			}
+		} catch(InterruptedException e) {}
+	}
 }
